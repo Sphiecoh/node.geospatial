@@ -1,0 +1,25 @@
+{
+  "name": "node.geospatial",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sphiecoh/node.geospatial",
+  "authors": [
+    "sphiecoh <sfiso.dlaba@gmail.com>"
+  ],
+  "description": "",
+  "main": "server.js",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "1.4.6",
+    "angularjs-geolocation": "0.1.1",
+    "bootstrap": "~3.3.5",
+    "modernizr": "~3.1.0"
+  }
+}
