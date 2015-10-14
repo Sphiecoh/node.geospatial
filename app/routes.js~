@@ -21,9 +21,6 @@ module.exports = function(app) {
             res.json(users);
         });
     });
-    app.get('/',function(req,res){
-        res.render('index');
-    });
 
     // POST Routes
     // --------------------------------------------------------
@@ -35,14 +32,11 @@ module.exports = function(app) {
 
         // New User is saved in the db.
         newuser.save(function(err){
-            if(err){
+            if(err)
                 res.send(err);
-}
-else{
 
             // If no errors are found, it responds with a JSON of the new user
             res.json(req.body);
-}
         });
     });
 };  

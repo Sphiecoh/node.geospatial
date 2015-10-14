@@ -1,6 +1,10 @@
+(function(){
 // Creates the gservice factory. This will be the primary means by which we interact with Google Maps
-angular.module('gservice', [])
-    .factory('gservice', function($rootScope, $http){
+angular.module('mapApp')
+    .factory('mapservice', mapservice);
+    
+    mapservice.$inject =['$rootScope','$http'];
+    function mapservice($rootScope, $http){
 
         // Initialize Variables
         // -------------------------------------------------------------
@@ -41,7 +45,7 @@ angular.module('gservice', [])
                 locations = convertToMapPoints(response);
 
                 // Then initialize the map.
-                initialize(latitude, longitude);
+                initialize(parseFloat(latitude),parseFloat(longitude));
             }).error(function(){});
         };
 
@@ -159,5 +163,6 @@ google.maps.event.addDomListener(window, 'load',
     googleMapService.refresh(selectedLat, selectedLong));
 
 return googleMapService;
-});
+}
+})();
 
