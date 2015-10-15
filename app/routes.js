@@ -21,10 +21,25 @@ module.exports = function(app) {
             res.json(users);
         });
     });
-    app.get('/',function(req,res){
-        res.render('index');
+    
+    app.post('/users/near',function(req, res){
+        console.log(req.body);
+         var query = User.find({'location': {$near :{$geometry: { type: "Point",coordinates :[req.body.lat,req.body.long]},maxDistance: 100}}});
+          query.exec(function(err, users){
+            if(err){
+                
+            console.log(err);
+                res.send(err);
+                }
+ else{
+            // If no errors are found, it responds with a JSON of all users
+            console.log(users);
+            res.json(users);
+ }
+        });
     });
-
+    
+    
     // POST Routes
     // --------------------------------------------------------
     // Provides method for saving new users in the db

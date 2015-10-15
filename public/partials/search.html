@@ -1,0 +1,21 @@
+ <div class="col-md-7" ng-controller="searchController as vm">
+ <h3>{{::vm.title}} with 1000 km(s) of you</h3>
+ You are here : lat {{vm.coords.lat}} long {{ vm.coords.long}}
+  <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>User Name</th>
+                                        <th>Age</th>
+                                        <th>Gender</th>
+                                        <th>Favourite Language</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="p in vm.users">
+                                        <td>{{::p.username}}</td>
+                                        <td>{{::p.age}}</td>
+                                        <td>{{::p.gender}}</td>
+                                        <td>{{::p.favlang}}</td>
+                                    </tr>
+                                </tbody>
+</div>
