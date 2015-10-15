@@ -12,7 +12,7 @@ var app             = express();
 // Express Configuration
 // -----------------------------------------------------
 // Sets the connection to MongoDB
-mongoose.connect("mongodb://104.45.24.179/MapApp");
+mongoose.connect("mongodb://localhost/MapApp");
 
 // Logging and Parsing
 app.use(express.static(__dirname + '/public'));                 // sets the static files location to public
