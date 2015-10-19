@@ -9,26 +9,31 @@ function userController($scope, $http, $rootScope, geolocation,mapservice){
     var vm = this;
     vm.formData = {};
     var coords = {};
-
+    vm.title = "Search";
     // Set initial coordinates to the center of the US
     vm.formData.latitude = 39.500;
     vm.formData.longitude = -98.350;
+    
+    activate();
+    
+    function activate()
+    {
+        geolocation.getLocation().then(function(data){
 
-    geolocation.getLocation().then(function(data){
+            // Set the latitude and longitude equal to the HTML5 coordinates
+            coords = {lat:data.coords.latitude, long:data.coords.longitude};
 
-        // Set the latitude and longitude equal to the HTML5 coordinates
-        coords = {lat:data.coords.latitude, long:data.coords.longitude};
+            // Display coordinates in location textboxes rounded to three decimal points
+            vm.formData.longitude = parseFloat(coords.long).toFixed(3);
+            vm.formData.latitude = parseFloat(coords.lat).toFixed(3);
 
-        // Display coordinates in location textboxes rounded to three decimal points
-        vm.formData.longitude = parseFloat(coords.long).toFixed(3);
-        vm.formData.latitude = parseFloat(coords.lat).toFixed(3);
+            // Display message confirming that the coordinates verified.
+            vm.formData.htmlverified = "Yep (Thanks for giving us real data!)";
 
-        // Display message confirming that the coordinates verified.
-        vm.formData.htmlverified = "Yep (Thanks for giving us real data!)";
+            mapservice.refresh(vm.formData.latitude, vm.formData.longitude);
 
-        mapservice.refresh(vm.formData.latitude, vm.formData.longitude);
-
-    });
+        });
+    }
 
     // Functions
     // ----------------------------------------------------------------------------
@@ -52,7 +57,7 @@ function userController($scope, $http, $rootScope, geolocation,mapservice){
             gender: vm.formData.gender,
             age: vm.formData.age,
             favlang: vm.formData.favlang,
-            location: [vm.formData.longitude, vm.formData.latitude],
+            location: {type : 'Point',coordinates:[parseFloat(vm.formData.longitude), parseFloat(vm.formData.latitude)]} ,
             htmlverified: vm.formData.htmlverified
         };
 

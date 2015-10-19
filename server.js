@@ -7,6 +7,10 @@ var port            = process.env.PORT || 3000;
 var morgan          = require('morgan');
 var bodyParser      = require('body-parser');
 var methodOverride  = require('method-override');
+var cookieParser    = require('cookie-parser');
+var session         = require('express-session');
+var passport        = require('passport');
+require('./app/passport')(passport);
 var app             = express();
 
 // Express Configuration
@@ -25,10 +29,14 @@ app.use(bodyParser.urlencoded({extended: true}));               // parse applica
 app.use(bodyParser.text());                                     // allows bodyParser to look at raw text
 app.use(bodyParser.json({ type: 'application/vnd.api+json'}));  // parse application/vnd.api+json as json
 app.use(methodOverride());
+app.use(cookieParser()); 
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' }));
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
 
 // Routes
 // ------------------------------------------------------
-require('./app/routes.js')(app);
+require('./app/routes.js')(app,passport);
 
 // Listen
 // -------------------------------------------------------

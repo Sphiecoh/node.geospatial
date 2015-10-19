@@ -5,9 +5,9 @@ angular.module('mapApp').controller('searchController',searchController);
 searchController.$inject = ['geolocation','$http'];
 	function searchController(geolocation,$http)
 	{
-		var vm = this;
-		vm.title ='Search For Users';
-		vm.users ={};
+		var search = this;
+		search.title ='Search For Users';
+		search.users ={};
 		activate();
 		
 		function activate()
@@ -15,9 +15,9 @@ searchController.$inject = ['geolocation','$http'];
 			geolocation.getLocation().then(function(data){
 
         // Set the latitude and longitude equal to the HTML5 coordinates
-         vm.coords = {lat:parseFloat(data.coords.latitude).toFixed(4), long:parseFloat(data.coords.longitude).toFixed(4)};
-           $http.post('/users/near',vm.coords).success(function(data){
-			   vm.users = data;
+         search.coords = {lat:parseFloat(data.coords.latitude).toFixed(4), long:parseFloat(data.coords.longitude).toFixed(4)};
+           $http.post('/users/near',search.coords).success(function(data){
+			   search.users = data;
 		   }).error(function(){});
 
     });

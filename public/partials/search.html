@@ -1,6 +1,6 @@
- <div class="col-md-7" ng-controller="searchController as vm">
- <h3>{{::vm.title}} with 1000 km(s) of you</h3>
- You are here : lat {{vm.coords.lat}} long {{ vm.coords.long}}
+ <div class="col-md-7" ng-controller="searchController as search">
+ <h3>{{::search.title}} with 100 km(s) of you</h3>
+ You are here : lat {{search.coords.lat}} long {{ search.coords.long}}
   <table class="table table-condensed table-striped">
                                 <thead>
                                     <tr>
@@ -8,14 +8,47 @@
                                         <th>Age</th>
                                         <th>Gender</th>
                                         <th>Favourite Language</th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="p in vm.users">
+                                    <tr ng-repeat="p in search.users">
                                         <td>{{::p.username}}</td>
                                         <td>{{::p.age}}</td>
                                         <td>{{::p.gender}}</td>
                                         <td>{{::p.favlang}}</td>
+                                        
                                     </tr>
                                 </tbody>
+     </table>
 </div>
+   <!-- Side Panel -->
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <!-- Panel Title -->
+                <div class="panel-heading">
+                    <h2 class="panel-title text-center">Find Developers </h2>
+                </div>
+                <!-- Panel Body -->
+                <div class="panel-body">
+                    <!-- Creates Form (novalidate disables HTML validation, Angular will control) -->
+                    <form name ="addForm" novalidate>
+                        <!-- Text Boxes and Other User Inputs. Note ng-model binds the values to Angular $scope -->
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username"  ng-model="vm.formData.username">
+                        </div>
+                        
+                       
+                        <div class="form-group">
+                            <label for="language">Favorite Language</label>
+                            <input type="text" class="form-control" id="language"  ng-model="vm.formData.favlang">
+                        </div>
+                       
+                       
+                        <!-- Submit button. Note that its tied to createUser() function from addCtrl. Also note ng-disabled logic which prevents early submits.  -->
+                        <button type="submit" class="btn btn-danger btn-block" ng-click="vm.createUser()" >Search</button>
+                    </form>
+                </div>
+				</div>
+				</div>

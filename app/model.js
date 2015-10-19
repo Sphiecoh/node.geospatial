@@ -4,14 +4,20 @@ var Schema      = mongoose.Schema;
 
 // Creates a User Schema. This will be the basis of how user data is stored in the db
 var UserSchema = new Schema({
+    id: {type: String, required:true},
     username: {type: String, required: true},
     gender: {type: String, required: true},
     age: {type: Number, required: true},
     favlang: {type: String, required: true},
-    location: {type: [Number], required: true}, // [Long, Lat]
-    htmlverified: String,
+    location: {type: {type: String},coordinates:[]}, // [Long, Lat]
     created_at: {type: Date, default: Date.now},
-    updated_at: {type: Date, default: Date.now}
+    updated_at: {type: Date, default: Date.now},
+    google           : {
+        id           : String,
+        token        : String,
+        email        : String,
+        name         : String
+    }
 });
 
 // Sets the created_at parameter equal to the current time

@@ -4,7 +4,7 @@ var User            = require('./model.js');
 
 
 // Opens App Routes
-module.exports = function(app) {
+module.exports = function(app, passport) {
 
     // GET Routes
     // --------------------------------------------------------
@@ -24,9 +24,10 @@ module.exports = function(app) {
     
     app.post('/users/near',function(req, res){
         console.log(req.body);
-         var query = User.find({'location': {$near :{$geometry: { type: "Point",coordinates :[req.body.lat,req.body.long]},maxDistance: 100}}});
-          query.exec(function(err, users){
-            if(err){
+         var query = User.find({'location':{$near:{$geometry:{type:'Point',coordinates :[parseFloat(req.body.long), parseFloat(req.body.lat)]},$maxDistance: 100000}}});
+        query.exec(function(err,users)
+        {
+                    if(err){
                 
             console.log(err);
                 res.send(err);
@@ -36,7 +37,7 @@ module.exports = function(app) {
             console.log(users);
             res.json(users);
  }
-        });
+                   });
     });
     
     
@@ -47,11 +48,12 @@ module.exports = function(app) {
 
         // Creates a new User based on the Mongoose schema and the post bo.dy
         var newuser = new User(req.body);
-
-        // New User is saved in the db.
+      
+      // New User is saved in the db.
         newuser.save(function(err){
             if(err){
-                res.send(err);
+                console.log(err);
+                res.json(err);
 }
 else{
 
@@ -60,4 +62,26 @@ else{
 }
         });
     });
-};  
+    
+    app.get('/auth/google',passport.authenticate('google',{scope:['profile','email']}));
+    app.get('/auth/google/return',passport.authenticate('google', {
+                    successRedirect : '#/profile',
+                    failureRedirect : '/'
+            }));
+    
+    app.get('/logout', function(req, res) {
+        req.logout();
+        res.redirect('/');
+    });
+            
+    
+};
+function isLoggedIn(req, res, next) {
+
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated())
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}
